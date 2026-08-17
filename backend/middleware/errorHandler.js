@@ -68,14 +68,12 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // Unknown/unexpected errors — log full error in dev
-  if (process.env.NODE_ENV === 'development') {
-    console.error('Unhandled error:', err);
-  }
+  console.error('Unhandled server error:', err);
 
   return res.status(500).json({
     success: false,
-    message: 'Something went wrong on our end',
-    error: process.env.NODE_ENV === 'development' ? err.message : null,
+    message: err.message || 'Something went wrong on our end',
+    error: err.message,
   });
 };
 
