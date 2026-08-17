@@ -121,26 +121,20 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* ── 3D Floating & Tilt Keyframe Animations ── */
 @keyframes float3D {
-  0% {
+  0%, 100% {
     transform: translateY(0px) rotate(0deg) scale(1);
   }
   50% {
-    transform: translateY(-10px) rotate(1.2deg) scale(1.02);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
+    transform: translateY(-8px) rotate(1.2deg) scale(1.02);
   }
 }
 
 @keyframes float3DReverse {
-  0% {
+  0%, 100% {
     transform: translateY(0px) rotate(0deg) scale(1);
   }
   50% {
-    transform: translateY(8px) rotate(-1.5deg) scale(0.98);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
+    transform: translateY(6px) rotate(-1.2deg) scale(0.98);
   }
 }
 
@@ -149,17 +143,63 @@ img { max-width: 100%; height: auto; display: block; }
     filter: drop-shadow(0 8px 16px rgba(99, 107, 47, 0.2));
   }
   50% {
-    filter: drop-shadow(0 16px 28px rgba(99, 107, 47, 0.4));
+    filter: drop-shadow(0 16px 28px rgba(99, 107, 47, 0.45));
   }
 }
 
-@keyframes shineEffect {
+@keyframes pulseWarning {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 154, 60, 0.4);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.04);
+    box-shadow: 0 0 0 6px rgba(201, 154, 60, 0);
+  }
+}
+
+@keyframes pulseDanger {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(166, 73, 59, 0.5);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(166, 73, 59, 0);
+  }
+}
+
+@keyframes shimmerEffect {
   0% {
-    transform: translateX(-100%) rotate(45deg);
+    background-position: -200% 0;
   }
   100% {
-    transform: translateX(200%) rotate(45deg);
+    background-position: 200% 0;
   }
+}
+
+.pulse-warning {
+  animation: pulseWarning 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.pulse-danger {
+  animation: pulseDanger 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.float-stagger-1 {
+  animation: float3D 6s ease-in-out infinite;
+}
+
+.float-stagger-2 {
+  animation: float3DReverse 7s ease-in-out infinite 0.8s;
+}
+
+.float-stagger-3 {
+  animation: float3D 8s ease-in-out infinite 1.5s;
 }
 
 /* ── Scrollbar Styling ── */

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FiTrendingUp, FiDollarSign, FiShoppingBag, FiAlertTriangle } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 import { statsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
+import { Tilt3D } from '../components/Tilt3D';
 
 export const StatsPage = () => {
   const [stats, setStats] = useState(null);
@@ -32,7 +34,11 @@ export const StatsPage = () => {
   }
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="page-header">
         <div>
           <h1>Analytics & Store Performance</h1>
@@ -42,46 +48,59 @@ export const StatsPage = () => {
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* 3D KPI Cards */}
       <div className="stats-grid">
-        <div className="card card-stat">
-          <div className="stat-label">Total Revenue (All Time)</div>
-          <div className="stat-value">${stats?.allTimeSales?.total?.toFixed(2) || '0.00'}</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            Across {stats?.allTimeSales?.count || 0} completed transactions
+        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-label">Total Revenue (All Time)</div>
+            <div className="stat-value">${stats?.allTimeSales?.total?.toFixed(2) || '0.00'}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              Across {stats?.allTimeSales?.count || 0} completed transactions
+            </div>
           </div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat">
-          <div className="stat-label">Today's Revenue</div>
-          <div className="stat-value">${stats?.todaySales?.total?.toFixed(2) || '0.00'}</div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-            {stats?.todaySales?.count || 0} transactions processed today
+        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-label">Today's Revenue</div>
+            <div className="stat-value">${stats?.todaySales?.total?.toFixed(2) || '0.00'}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              {stats?.todaySales?.count || 0} transactions processed today
+            </div>
           </div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat">
-          <div className="stat-label">Average Ticket Size</div>
-          <div className="stat-value">
-            $
-            {stats?.allTimeSales?.count > 0
-              ? (stats.allTimeSales.total / stats.allTimeSales.count).toFixed(2)
-              : '0.00'}
+        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-label">Average Ticket Size</div>
+            <div className="stat-value">
+              $
+              {stats?.allTimeSales?.count > 0
+                ? (stats.allTimeSales.total / stats.allTimeSales.count).toFixed(2)
+                : '0.00'}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per checkout order</div>
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per checkout order</div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat">
-          <div className="stat-label">Low-Stock Triggered</div>
-          <div className="stat-value" style={{ color: stats?.lowStockCount > 0 ? 'var(--danger)' : 'inherit' }}>
-            {stats?.lowStockCount || 0}
+        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-label">Low-Stock Triggered</div>
+            <div className="stat-value" style={{ color: stats?.lowStockCount > 0 ? 'var(--danger)' : 'inherit' }}>
+              {stats?.lowStockCount || 0}
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Requires supplier reorder</div>
           </div>
-          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Requires supplier reorder</div>
-        </div>
+        </Tilt3D>
       </div>
 
       {/* Top Selling Products Full Breakdown */}
-      <div className="card mb-6">
+      <motion.div
+        className="card mb-6"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15, duration: 0.3 }}
+      >
         <h3 style={{ marginBottom: 'var(--space-4)' }}>Top Selling Products</h3>
         <table className="data-table">
           <thead>
@@ -102,8 +121,13 @@ export const StatsPage = () => {
                 </td>
               </tr>
             ) : (
-              stats?.topProducts?.map((item) => (
-                <tr key={item.product_id}>
+              stats?.topProducts?.map((item, i) => (
+                <motion.tr
+                  key={item.product_id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
                   <td className="mono">{item.product?.sku || '—'}</td>
                   <td style={{ fontWeight: 500 }}>{item.product?.name || `Product #${item.product_id}`}</td>
                   <td>
@@ -114,15 +138,20 @@ export const StatsPage = () => {
                     ${parseFloat(item.dataValues?.total_revenue || item.total_revenue || 0).toFixed(2)}
                   </td>
                   <td className="mono">${parseFloat(item.product?.price || 0).toFixed(2)}</td>
-                </tr>
+                </motion.tr>
               ))
             )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       {/* Critical Low Stock Thresholds */}
-      <div className="card">
+      <motion.div
+        className="card"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25, duration: 0.3 }}
+      >
         <h3 style={{ marginBottom: 'var(--space-4)', color: 'var(--danger)' }}>
           Items Below Reorder Threshold
         </h3>
@@ -145,8 +174,13 @@ export const StatsPage = () => {
                 </td>
               </tr>
             ) : (
-              stats?.lowStockProducts?.map((prod) => (
-                <tr key={prod.id}>
+              stats?.lowStockProducts?.map((prod, i) => (
+                <motion.tr
+                  key={prod.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                >
                   <td className="mono">{prod.sku}</td>
                   <td style={{ fontWeight: 500 }}>{prod.name}</td>
                   <td>
@@ -158,17 +192,17 @@ export const StatsPage = () => {
                   <td className="mono">{prod.reorder_threshold}</td>
                   <td>
                     {prod.quantity_in_stock === 0 ? (
-                      <span className="badge badge-danger">Out of Stock</span>
+                      <span className="badge badge-danger pulse-danger">Out of Stock</span>
                     ) : (
-                      <span className="badge badge-warning">Restock Needed</span>
+                      <span className="badge badge-warning pulse-warning">Restock Needed</span>
                     )}
                   </td>
-                </tr>
+                </motion.tr>
               ))
             )}
           </tbody>
         </table>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };

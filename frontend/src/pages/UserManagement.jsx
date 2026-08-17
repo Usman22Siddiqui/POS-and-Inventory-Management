@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiUserPlus, FiEdit2, FiTrash2, FiCheck, FiX } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { usersApi, authApi } from '../api';
 import { useAuth } from '../context/AuthContext';
@@ -107,7 +108,11 @@ export const UserManagement = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="page-header">
         <div>
           <h1>Staff & Role Management</h1>
@@ -139,8 +144,13 @@ export const UserManagement = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
+              {users.map((u, idx) => (
+                <motion.tr
+                  key={u.id}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.04 }}
+                >
                   <td style={{ fontWeight: 600 }}>{u.username}</td>
                   <td>{u.email}</td>
                   <td>
@@ -187,7 +197,7 @@ export const UserManagement = () => {
                       )}
                     </div>
                   </td>
-                </tr>
+                </motion.tr>
               ))}
             </tbody>
           </table>
@@ -195,84 +205,93 @@ export const UserManagement = () => {
       </div>
 
       {/* Create User Modal */}
-      {isCreateModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>Register New Staff</h2>
-              <button className="modal-close" onClick={() => setIsCreateModalOpen(false)}>
-                <FiX />
-              </button>
-            </div>
+      <AnimatePresence>
+        {isCreateModalOpen && (
+          <div className="modal-overlay" onClick={() => setIsCreateModalOpen(false)}>
+            <motion.div
+              className="modal"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+            >
+              <div className="modal-header">
+                <h2>Register New Staff</h2>
+                <button className="modal-close" onClick={() => setIsCreateModalOpen(false)}>
+                  <FiX />
+                </button>
+              </div>
 
-            <form onSubmit={handleCreateUser}>
-              <div className="form-grid">
-                <div className="input-group full-width">
-                  <label className="input-label">Username *</label>
-                  <input
-                    type="text"
-                    className="input"
-                    value={newUser.username}
-                    onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
-                    placeholder="e.g. jdoe_cashier"
-                    required
-                  />
+              <form onSubmit={handleCreateUser}>
+                <div className="form-grid">
+                  <div className="input-group full-width">
+                    <label className="input-label">Username *</label>
+                    <input
+                      type="text"
+                      className="input"
+                      value={newUser.username}
+                      onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+                      placeholder="e.g. jdoe_cashier"
+                      required
+                    />
+                  </div>
+
+                  <div className="input-group full-width">
+                    <label className="input-label">Email *</label>
+                    <input
+                      type="email"
+                      className="input"
+                      value={newUser.email}
+                      onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                      placeholder="jdoe@teerop.com"
+                      required
+                    />
+                  </div>
+
+                  <div className="input-group full-width">
+                    <label className="input-label">Temporary Password *</label>
+                    <input
+                      type="password"
+                      className="input"
+                      value={newUser.password}
+                      onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                      placeholder="Minimum 6 characters"
+                      required
+                    />
+                  </div>
+
+                  <div className="input-group full-width">
+                    <label className="input-label">Role Access Tier *</label>
+                    <select
+                      className="select"
+                      value={newUser.role}
+                      onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+                    >
+                      <option value="cashier">Cashier (POS & Own Transactions only)</option>
+                      <option value="inventory_manager">Inventory Manager (Product CRUD & Stock)</option>
+                      <option value="admin">Administrator (Full Access)</option>
+                    </select>
+                  </div>
                 </div>
 
-                <div className="input-group full-width">
-                  <label className="input-label">Email *</label>
-                  <input
-                    type="email"
-                    className="input"
-                    value={newUser.email}
-                    onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-                    placeholder="jdoe@teerop.com"
-                    required
-                  />
-                </div>
-
-                <div className="input-group full-width">
-                  <label className="input-label">Temporary Password *</label>
-                  <input
-                    type="password"
-                    className="input"
-                    value={newUser.password}
-                    onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                    placeholder="Minimum 6 characters"
-                    required
-                  />
-                </div>
-
-                <div className="input-group full-width">
-                  <label className="input-label">Role Access Tier *</label>
-                  <select
-                    className="select"
-                    value={newUser.role}
-                    onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+                <div className="form-actions">
+                  <button
+                    type="button"
+                    className="btn btn-ghost"
+                    onClick={() => setIsCreateModalOpen(false)}
                   >
-                    <option value="cashier">Cashier (POS & Own Transactions only)</option>
-                    <option value="inventory_manager">Inventory Manager (Product CRUD & Stock)</option>
-                    <option value="admin">Administrator (Full Access)</option>
-                  </select>
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn btn-primary" disabled={submitting}>
+                    {submitting ? 'Creating Account...' : 'Create Account'}
+                  </button>
                 </div>
-              </div>
-
-              <div className="form-actions">
-                <button
-                  type="button"
-                  className="btn btn-ghost"
-                  onClick={() => setIsCreateModalOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className="btn btn-primary" disabled={submitting}>
-                  {submitting ? 'Creating Account...' : 'Create Account'}
-                </button>
-              </div>
-            </form>
+              </form>
+            </motion.div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiX, FiUploadCloud, FiAlertCircle } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { productsApi } from '../api';
 
@@ -180,7 +181,15 @@ export const ProductModal = ({ isOpen, onClose, product = null, onSaved }) => {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '640px' }}>
+      <motion.div
+        className="modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: '640px' }}
+        initial={{ opacity: 0, scale: 0.93, y: 25 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.93, y: 25 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+      >
         <div className="modal-header">
           <h2>{product ? 'Edit Product' : 'Add New Inventory Item'}</h2>
           <button className="modal-close" onClick={onClose}>
@@ -442,7 +451,7 @@ export const ProductModal = ({ isOpen, onClose, product = null, onSaved }) => {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

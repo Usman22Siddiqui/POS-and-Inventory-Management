@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FiClock, FiFileText, FiCalendar, FiDollarSign } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { posApi } from '../api';
 import { ReceiptModal } from '../components/ReceiptModal';
@@ -30,7 +31,11 @@ export const MyTransactions = () => {
   }, []);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="page-header">
         <div>
           <h1>Transaction History</h1>
@@ -66,12 +71,17 @@ export const MyTransactions = () => {
               </tr>
             </thead>
             <tbody>
-              {transactions.map((tx) => {
+              {transactions.map((tx, idx) => {
                 const itemCount = tx.items?.reduce((acc, it) => acc + it.quantity, 0) || 0;
                 const sub = parseFloat(tx.total_amount) - parseFloat(tx.tax);
 
                 return (
-                  <tr key={tx.id}>
+                  <motion.tr
+                    key={tx.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.04 }}
+                  >
                     <td className="mono">#{tx.id}</td>
                     <td style={{ fontSize: '0.8125rem' }}>
                       {new Date(tx.timestamp).toLocaleString()}
@@ -113,7 +123,7 @@ export const MyTransactions = () => {
                         <FiFileText size={13} /> View Slip
                       </button>
                     </td>
-                  </tr>
+                  </motion.tr>
                 );
               })}
             </tbody>
@@ -126,6 +136,6 @@ export const MyTransactions = () => {
         onClose={() => setSelectedTx(null)}
         transaction={selectedTx}
       />
-    </div>
+    </motion.div>
   );
 };

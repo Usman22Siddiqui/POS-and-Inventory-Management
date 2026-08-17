@@ -196,6 +196,7 @@ export const InventoryDashboard = () => {
                         }
                         alt={prod.name}
                         loading="lazy"
+                        className={`float-stagger-${(idx % 3) + 1}`}
                       />
                     ) : (
                       <div className="no-image">
