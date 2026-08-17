@@ -5,10 +5,12 @@ const { AppError } = require('../middleware/errorHandler');
 /**
  * Generate JWT token for a user
  */
+const JWT_SECRET = process.env.JWT_SECRET || 'teerop-pos-super-secret-jwt-key-2026';
+
 const generateToken = (user) => {
   return jwt.sign(
     { id: user.id, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
+    JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
   );
 };
