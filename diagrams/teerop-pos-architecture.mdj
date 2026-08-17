@@ -9,7 +9,7 @@
 			"_parent": {
 				"$ref": "AAAAAAGQteeropProjectRoot"
 			},
-			"name": "Domain Model & Data Architecture",
+			"name": "Domain Model",
 			"ownedElements": [
 				{
 					"_type": "UMLClassDiagram",
@@ -17,7 +17,245 @@
 					"_parent": {
 						"$ref": "AAAAAAGQteeropDomainModel"
 					},
-					"name": "Class Diagram - Full Relational Model"
+					"name": "Class Diagram - Full Relational Architecture",
+					"ownedViews": [
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGQUserClassView",
+							"_parent": { "$ref": "AAAAAAGQteeropClassDiagram" },
+							"model": { "$ref": "AAAAAAGQUserClass" },
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGQU_NCV",
+									"_parent": { "$ref": "AAAAAAGQUserClassView" },
+									"model": { "$ref": "AAAAAAGQUserClass" },
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGQU_NL",
+											"_parent": { "$ref": "AAAAAAGQU_NCV" },
+											"font": "Arial;13;1",
+											"left": 69,
+											"top": 87,
+											"width": 215,
+											"height": 13,
+											"text": "User"
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 80,
+									"width": 225,
+									"height": 25
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGQU_ACV",
+									"_parent": { "$ref": "AAAAAAGQUserClassView" },
+									"model": { "$ref": "AAAAAAGQUserClass" },
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 105,
+									"width": 225,
+									"height": 115
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGQU_OCV",
+									"_parent": { "$ref": "AAAAAAGQUserClassView" },
+									"model": { "$ref": "AAAAAAGQUserClass" },
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 220,
+									"width": 225,
+									"height": 55
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 64,
+							"top": 80,
+							"width": 225,
+							"height": 205
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGQProductClassView",
+							"_parent": { "$ref": "AAAAAAGQteeropClassDiagram" },
+							"model": { "$ref": "AAAAAAGQProductClass" },
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGQP_NCV",
+									"_parent": { "$ref": "AAAAAAGQProductClassView" },
+									"model": { "$ref": "AAAAAAGQProductClass" },
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGQP_NL",
+											"_parent": { "$ref": "AAAAAAGQP_NCV" },
+											"font": "Arial;13;1",
+											"left": 685,
+											"top": 67,
+											"width": 265,
+											"height": 13,
+											"text": "Product"
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 680,
+									"top": 60,
+									"width": 275,
+									"height": 25
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGQP_ACV",
+									"_parent": { "$ref": "AAAAAAGQProductClassView" },
+									"model": { "$ref": "AAAAAAGQProductClass" },
+									"font": "Arial;13;0",
+									"left": 680,
+									"top": 85,
+									"width": 275,
+									"height": 265
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGQP_OCV",
+									"_parent": { "$ref": "AAAAAAGQProductClassView" },
+									"model": { "$ref": "AAAAAAGQProductClass" },
+									"font": "Arial;13;0",
+									"left": 680,
+									"top": 350,
+									"width": 275,
+									"height": 55
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 680,
+							"top": 60,
+							"width": 275,
+							"height": 355
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGQTransactionClassView",
+							"_parent": { "$ref": "AAAAAAGQteeropClassDiagram" },
+							"model": { "$ref": "AAAAAAGQTransactionClass" },
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGQT_NCV",
+									"_parent": { "$ref": "AAAAAAGQTransactionClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionClass" },
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGQT_NL",
+											"_parent": { "$ref": "AAAAAAGQT_NCV" },
+											"font": "Arial;13;1",
+											"left": 69,
+											"top": 367,
+											"width": 215,
+											"height": 13,
+											"text": "Transaction"
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 360,
+									"width": 225,
+									"height": 25
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGQT_ACV",
+									"_parent": { "$ref": "AAAAAAGQTransactionClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionClass" },
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 385,
+									"width": 225,
+									"height": 105
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGQT_OCV",
+									"_parent": { "$ref": "AAAAAAGQTransactionClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionClass" },
+									"font": "Arial;13;0",
+									"left": 64,
+									"top": 490,
+									"width": 225,
+									"height": 35
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 64,
+							"top": 360,
+							"width": 225,
+							"height": 175
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGQTransactionItemClassView",
+							"_parent": { "$ref": "AAAAAAGQteeropClassDiagram" },
+							"model": { "$ref": "AAAAAAGQTransactionItemClass" },
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGQTI_NCV",
+									"_parent": { "$ref": "AAAAAAGQTransactionItemClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionItemClass" },
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGQTI_NL",
+											"_parent": { "$ref": "AAAAAAGQTI_NCV" },
+											"font": "Arial;13;1",
+											"left": 369,
+											"top": 367,
+											"width": 235,
+											"height": 13,
+											"text": "TransactionItem"
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 364,
+									"top": 360,
+									"width": 245,
+									"height": 25
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGQTI_ACV",
+									"_parent": { "$ref": "AAAAAAGQTransactionItemClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionItemClass" },
+									"font": "Arial;13;0",
+									"left": 364,
+									"top": 385,
+									"width": 245,
+									"height": 115
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGQTI_OCV",
+									"_parent": { "$ref": "AAAAAAGQTransactionItemClassView" },
+									"model": { "$ref": "AAAAAAGQTransactionItemClass" },
+									"font": "Arial;13;0",
+									"left": 364,
+									"top": 500,
+									"width": 245,
+									"height": 35
+								}
+							],
+							"font": "Arial;13;0",
+							"left": 364,
+							"top": 360,
+							"width": 245,
+							"height": 185
+						}
+					]
 				},
 				{
 					"_type": "UMLClass",
@@ -35,8 +273,8 @@
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_isActive", "name": "is_active", "type": "Boolean", "visibility": "private" }
 					],
 					"operations": [
-						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_valPass", "name": "validatePassword", "parameters": [{ "_type": "UMLParameter", "name": "password", "type": "String" }] },
-						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_toSafe", "name": "toSafeJSON" }
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_valPass", "name": "+ validatePassword(password: String): Boolean" },
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_toSafe", "name": "+ toSafeJSON(): Object" }
 					]
 				},
 				{
@@ -55,7 +293,6 @@
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_qty", "name": "quantity_in_stock", "type": "Integer", "visibility": "private" },
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_reorder", "name": "reorder_threshold", "type": "Integer", "visibility": "private" },
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_imageUrl", "name": "image_url", "type": "String", "visibility": "private" },
-						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_desc", "name": "description", "type": "Text", "visibility": "private" },
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_hNote", "name": "handling_note", "type": "Text", "visibility": "private" },
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_isFrag", "name": "is_fragile", "type": "Boolean", "visibility": "private" },
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_expDate", "name": "expiry_date", "type": "DateOnly", "visibility": "private" },
@@ -66,8 +303,8 @@
 						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_safeNote", "name": "safety_note", "type": "Text", "visibility": "private" }
 					],
 					"operations": [
-						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isLow", "name": "isLowStock", "parameters": [{ "_type": "UMLParameter", "direction": "return", "type": "Boolean" }] },
-						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isExp", "name": "isExpiringSoon", "parameters": [{ "_type": "UMLParameter", "direction": "return", "type": "Boolean" }] }
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isLow", "name": "+ isLowStock(): Boolean" },
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isExp", "name": "+ isExpiringSoon(): Boolean" }
 					]
 				},
 				{

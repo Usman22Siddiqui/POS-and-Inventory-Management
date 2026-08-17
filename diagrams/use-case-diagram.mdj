@@ -17,7 +17,119 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Teerop POS System Use Cases"
+					"name": "Teerop POS System Use Cases",
+					"ownedViews": [
+						{
+							"_type": "UMLActorView",
+							"_id": "AAAAAAGQAdminActorView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQAdminActor" },
+							"font": "Arial;13;0",
+							"left": 80,
+							"top": 100,
+							"width": 110,
+							"height": 80
+						},
+						{
+							"_type": "UMLActorView",
+							"_id": "AAAAAAGQManagerActorView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQManagerActor" },
+							"font": "Arial;13;0",
+							"left": 80,
+							"top": 280,
+							"width": 120,
+							"height": 80
+						},
+						{
+							"_type": "UMLActorView",
+							"_id": "AAAAAAGQCashierActorView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQCashierActor" },
+							"font": "Arial;13;0",
+							"left": 80,
+							"top": 460,
+							"width": 110,
+							"height": 80
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_LoginView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_Login" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 80,
+							"width": 210,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_ScanView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_Scan" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 160,
+							"width": 220,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_CheckoutView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_Checkout" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 240,
+							"width": 230,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_InventoryCRUDView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_InventoryCRUD" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 320,
+							"width": 240,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_LowStockAlertView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_LowStockAlert" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 400,
+							"width": 250,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_StaffManageView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_StaffManage" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 480,
+							"width": 240,
+							"height": 60
+						},
+						{
+							"_type": "UMLUseCaseView",
+							"_id": "AAAAAAGQUC_AnalyticsView",
+							"_parent": { "$ref": "AAAAAAGQUCDiagram" },
+							"model": { "$ref": "AAAAAAGQUC_Analytics" },
+							"font": "Arial;13;0",
+							"left": 320,
+							"top": 560,
+							"width": 230,
+							"height": 60
+						}
+					]
 				},
 				{
 					"_type": "UMLActor",
@@ -25,7 +137,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "System Administrator"
+					"name": "Administrator"
 				},
 				{
 					"_type": "UMLActor",
@@ -49,7 +161,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Authenticate & Start Shift"
+					"name": "Login & Authentication"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -65,7 +177,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Atomic Checkout & Print Receipt"
+					"name": "Process Atomic Checkout"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -73,7 +185,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Manage Multi-Category Inventory"
+					"name": "Manage Multi-Category Products"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -81,7 +193,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Monitor Low-Stock & Expiration Rails"
+					"name": "Monitor Low-Stock & Expiry Alerts"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -89,7 +201,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "Administer Staff & Role Permissions"
+					"name": "Administer Staff & Roles"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -97,7 +209,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGQUseCaseModel"
 					},
-					"name": "View Revenue & Sales Analytics"
+					"name": "View Revenue & Sales Stats"
 				}
 			]
 		}
