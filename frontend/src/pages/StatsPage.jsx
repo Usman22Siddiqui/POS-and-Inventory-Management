@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { statsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
 import { Tilt3D } from '../components/Tilt3D';
+import { CountUpNumber } from '../components/CountUpNumber';
 
 export const StatsPage = () => {
   const [stats, setStats] = useState(null);
@@ -33,6 +34,10 @@ export const StatsPage = () => {
     );
   }
 
+  const avgTicket = stats?.allTimeSales?.count > 0
+    ? (stats.allTimeSales.total / stats.allTimeSales.count)
+    : 0;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -48,46 +53,59 @@ export const StatsPage = () => {
         </div>
       </div>
 
-      {/* 3D KPI Cards */}
+      {/* 3D KPI Cards with Count-Up Animations */}
       <div className="stats-grid">
-        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+        <Tilt3D maxTilt={6} depth={20} enableGlow={true}>
           <div className="card card-stat card-glass h-full">
             <div className="stat-label">Total Revenue (All Time)</div>
-            <div className="stat-value">${stats?.allTimeSales?.total?.toFixed(2) || '0.00'}</div>
+            <div className="stat-value">
+              <CountUpNumber
+                value={stats?.allTimeSales?.total || 0}
+                prefix="$"
+                decimals={2}
+              />
+            </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              Across {stats?.allTimeSales?.count || 0} completed transactions
+              Across <CountUpNumber value={stats?.allTimeSales?.count || 0} /> completed transactions
             </div>
           </div>
         </Tilt3D>
 
-        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+        <Tilt3D maxTilt={6} depth={20} enableGlow={true}>
           <div className="card card-stat card-glass h-full">
             <div className="stat-label">Today's Revenue</div>
-            <div className="stat-value">${stats?.todaySales?.total?.toFixed(2) || '0.00'}</div>
+            <div className="stat-value">
+              <CountUpNumber
+                value={stats?.todaySales?.total || 0}
+                prefix="$"
+                decimals={2}
+              />
+            </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              {stats?.todaySales?.count || 0} transactions processed today
+              <CountUpNumber value={stats?.todaySales?.count || 0} /> transactions processed today
             </div>
           </div>
         </Tilt3D>
 
-        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+        <Tilt3D maxTilt={6} depth={20} enableGlow={true}>
           <div className="card card-stat card-glass h-full">
             <div className="stat-label">Average Ticket Size</div>
             <div className="stat-value">
-              $
-              {stats?.allTimeSales?.count > 0
-                ? (stats.allTimeSales.total / stats.allTimeSales.count).toFixed(2)
-                : '0.00'}
+              <CountUpNumber
+                value={avgTicket}
+                prefix="$"
+                decimals={2}
+              />
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per checkout order</div>
           </div>
         </Tilt3D>
 
-        <Tilt3D maxTilt={5} depth={16} enableGlow={true}>
+        <Tilt3D maxTilt={6} depth={20} enableGlow={true}>
           <div className="card card-stat card-glass h-full">
             <div className="stat-label">Low-Stock Triggered</div>
             <div className="stat-value" style={{ color: stats?.lowStockCount > 0 ? 'var(--danger)' : 'inherit' }}>
-              {stats?.lowStockCount || 0}
+              <CountUpNumber value={stats?.lowStockCount || 0} />
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Requires supplier reorder</div>
           </div>

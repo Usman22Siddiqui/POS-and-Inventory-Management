@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiSearch, FiTrash2, FiPlus, FiMinus, FiCheck, FiShoppingBag } from 'react-icons/fi';
+import { FiSearch, FiTrash2, FiPlus, FiMinus, FiCheck } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { posApi, productsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
 import { ReceiptModal } from '../components/ReceiptModal';
 import { FloatingFrame } from '../components/FloatingFrame';
+import { MagneticButton } from '../components/MagneticButton';
 import emptyShelfImg from '../assets/illustrations/empty-state.jpg';
 
 export const CashierPOS = () => {
@@ -17,6 +18,7 @@ export const CashierPOS = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [lastTransaction, setLastTransaction] = useState(null);
   const [receiptOpen, setReceiptOpen] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
 
   const scanInputRef = useRef(null);
 
@@ -37,6 +39,8 @@ export const CashierPOS = () => {
     if (!query) return;
 
     setLoading(true);
+    setIsScanning(true);
+
     try {
       // 1. Try SKU exact case-insensitive lookup first
       const res = await posApi.lookup(query);
@@ -79,6 +83,7 @@ export const CashierPOS = () => {
       }
     } finally {
       setLoading(false);
+      setTimeout(() => setIsScanning(false), 600);
       // Auto-refocus scanner input for high-speed continuous scanning
       setTimeout(() => scanInputRef.current?.focus(), 50);
     }
@@ -189,9 +194,10 @@ export const CashierPOS = () => {
     <div className="pos-layout">
       {/* ── LEFT PANEL (60%): Scanner + Live Cart ── */}
       <div className="pos-left">
-        {/* Scanner Bar pinned at top */}
+        {/* Scanner Bar with Laser Line Sweep Animation */}
         <div className="pos-scan-bar">
-          <form onSubmit={handleScanSubmit} style={{ position: 'relative' }}>
+          <form onSubmit={handleScanSubmit} className="scanner-container">
+            {isScanning && <div className="scan-laser-line" />}
             <input
               ref={scanInputRef}
               type="text"
@@ -202,7 +208,7 @@ export const CashierPOS = () => {
               disabled={loading}
               autoComplete="off"
             />
-            <button
+            <MagneticButton
               type="submit"
               className="btn btn-primary"
               style={{
@@ -213,9 +219,10 @@ export const CashierPOS = () => {
                 padding: '8px 16px',
               }}
               disabled={loading || !scanQuery.trim()}
+              strength={0.15}
             >
               <FiSearch /> {loading ? 'Scanning...' : 'Scan Item'}
-            </button>
+            </MagneticButton>
           </form>
 
           {/* Search suggestions dropdown fallback */}
@@ -299,14 +306,14 @@ export const CashierPOS = () => {
                   className="cart-item"
                   layout
                   /* Section 4: Signature Scan-to-Cart Settle Animation (~200ms with slight overshoot) */
-                  initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                  initial={{ opacity: 0, y: -24, scale: 0.94 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, x: -30 }}
                   transition={{
                     type: 'spring',
-                    stiffness: 450,
-                    damping: 24,
-                    mass: 0.8,
+                    stiffness: 480,
+                    damping: 22,
+                    mass: 0.75,
                   }}
                 >
                   <div className="cart-item-info">
@@ -330,18 +337,39 @@ export const CashierPOS = () => {
                   </div>
 
                   <div className="cart-item-qty">
-                    <button type="button" onClick={() => updateQuantity(item.id, -1)}>
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.85 }}
+                      onClick={() => updateQuantity(item.id, -1)}
+                    >
                       <FiMinus size={12} />
-                    </button>
-                    <span>{item.quantity}</span>
-                    <button type="button" onClick={() => updateQuantity(item.id, 1)}>
+                    </motion.button>
+                    <motion.span
+                      key={item.quantity}
+                      initial={{ scale: 1.3, color: 'var(--moss-primary)' }}
+                      animate={{ scale: 1, color: 'inherit' }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {item.quantity}
+                    </motion.span>
+                    <motion.button
+                      type="button"
+                      whileTap={{ scale: 0.85 }}
+                      onClick={() => updateQuantity(item.id, 1)}
+                    >
                       <FiPlus size={12} />
-                    </button>
+                    </motion.button>
                   </div>
 
-                  <div className="cart-item-price">
+                  <motion.div
+                    key={item.price * item.quantity}
+                    className="cart-item-price"
+                    initial={{ scale: 1.15 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     ${(item.price * item.quantity).toFixed(2)}
-                  </div>
+                  </motion.div>
 
                   <button
                     type="button"
@@ -368,26 +396,41 @@ export const CashierPOS = () => {
             </span>
           </div>
           {cart.length > 0 && (
-            <motion.button
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
+            <MagneticButton
               className="btn btn-ghost btn-sm"
               onClick={clearCart}
+              strength={0.2}
             >
               Clear All
-            </motion.button>
+            </MagneticButton>
           )}
         </div>
 
         <div className="pos-totals">
           <div className="pos-total-row">
             <span className="pos-total-label">Subtotal</span>
-            <span className="pos-total-value">${subtotal.toFixed(2)}</span>
+            <motion.span
+              key={subtotal.toFixed(2)}
+              className="pos-total-value"
+              initial={{ opacity: 0.6, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              ${subtotal.toFixed(2)}
+            </motion.span>
           </div>
 
           <div className="pos-total-row">
             <span className="pos-total-label">Sales Tax (Flat 5%)</span>
-            <span className="pos-total-value">${tax.toFixed(2)}</span>
+            <motion.span
+              key={tax.toFixed(2)}
+              className="pos-total-value"
+              initial={{ opacity: 0.6, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              ${tax.toFixed(2)}
+            </motion.span>
           </div>
 
           <div
@@ -399,17 +442,24 @@ export const CashierPOS = () => {
             }}
           >
             <span className="pos-total-label">Total Due</span>
-            <span className="pos-total-value">${grandTotal.toFixed(2)}</span>
+            <motion.span
+              key={grandTotal.toFixed(2)}
+              className="pos-total-value"
+              initial={{ scale: 1.12, color: 'var(--moss-primary)' }}
+              animate={{ scale: 1, color: 'var(--moss-deep)' }}
+              transition={{ duration: 0.25 }}
+            >
+              ${grandTotal.toFixed(2)}
+            </motion.span>
           </div>
 
           <div style={{ marginTop: 'var(--space-4)' }}>
-            <motion.button
-              type="button"
+            <MagneticButton
               className="btn btn-checkout"
               disabled={cart.length === 0 || checkoutLoading}
               onClick={handleCheckout}
-              whileHover={{ scale: cart.length > 0 ? 1.02 : 1 }}
-              whileTap={{ scale: 0.98 }}
+              strength={0.15}
+              style={{ width: '100%' }}
             >
               {checkoutLoading ? (
                 'Finalizing Sale...'
@@ -418,7 +468,7 @@ export const CashierPOS = () => {
                   <FiCheck /> Charge ${grandTotal.toFixed(2)}
                 </>
               )}
-            </motion.button>
+            </MagneticButton>
           </div>
         </div>
       </div>

@@ -13,6 +13,8 @@ import { productsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
 import { ProductModal } from '../components/ProductModal';
 import { LowStockRail } from '../components/LowStockRail';
+import { Tilt3D } from '../components/Tilt3D';
+import { MagneticButton } from '../components/MagneticButton';
 import { useAuth } from '../context/AuthContext';
 
 const CATEGORY_TABS = ['All', 'Fragile', 'Cold', 'Tech', 'Cleaning', 'General'];
@@ -93,31 +95,38 @@ export const InventoryDashboard = () => {
         </div>
 
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button
+          <MagneticButton
             className="btn btn-ghost"
             onClick={() => setRailOpen(!railOpen)}
+            strength={0.2}
           >
             <FiAlertCircle style={{ color: 'var(--warning)' }} /> Low-Stock Rail
-          </button>
+          </MagneticButton>
 
           {(user?.role === 'admin' || user?.role === 'inventory_manager') && (
-            <button className="btn btn-primary" onClick={handleOpenAddModal}>
+            <MagneticButton
+              className="btn btn-primary"
+              onClick={handleOpenAddModal}
+              strength={0.2}
+            >
               <FiPlus /> New Product
-            </button>
+            </MagneticButton>
           )}
         </div>
       </div>
 
-      {/* Category Tabs */}
+      {/* Category Tabs with Animated Pill Highlight */}
       <div className="category-tabs">
         {CATEGORY_TABS.map((cat) => (
-          <button
+          <motion.button
             key={cat}
             className={`category-tab ${activeCategory === cat ? 'active' : ''}`}
             onClick={() => setActiveCategory(cat)}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
           >
             {cat}
-          </button>
+          </motion.button>
         ))}
       </div>
 
@@ -144,7 +153,7 @@ export const InventoryDashboard = () => {
         </div>
       </div>
 
-      {/* Product Grid with Smooth Stagger and 3D Floating Images */}
+      {/* Product Grid with 3D Tilt, Layered Parallax, Specular Sweep & Floating Images */}
       {loading ? (
         <div style={{ textAlign: 'center', padding: '48px', color: 'var(--text-muted)' }}>
           Loading catalog items...
@@ -180,116 +189,126 @@ export const InventoryDashboard = () => {
               <motion.div
                 key={prod.id}
                 variants={{
-                  hidden: { opacity: 0, y: 16, scale: 0.96 },
+                  hidden: { opacity: 0, y: 18, scale: 0.95 },
                   show: { opacity: 1, y: 0, scale: 1 },
                 }}
-                whileHover={{ y: -6, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } }}
-                className="product-card h-full"
+                className="h-full"
               >
-                <div className="product-card-img">
-                  {prod.image_url ? (
-                    <img
-                      src={
-                        prod.image_url.startsWith('http')
-                          ? prod.image_url
-                          : `http://localhost:5000${prod.image_url}`
-                      }
-                      alt={prod.name}
-                      loading="lazy"
-                      className={floatClass}
-                    />
-                  ) : (
-                    <div className="no-image">
-                      <FiLayers />
-                    </div>
-                  )}
+                <Tilt3D
+                  maxTilt={6}
+                  depth={18}
+                  enableGlow={true}
+                  className="h-full"
+                >
+                  <div className="product-card h-full">
+                    <div className="product-card-img" style={{ transform: 'translateZ(12px)' }}>
+                      {prod.image_url ? (
+                        <img
+                          src={
+                            prod.image_url.startsWith('http')
+                              ? prod.image_url
+                              : `http://localhost:5000${prod.image_url}`
+                          }
+                          alt={prod.name}
+                          loading="lazy"
+                          className={floatClass}
+                        />
+                      ) : (
+                        <div className="no-image">
+                          <FiLayers />
+                        </div>
+                      )}
 
-                  <div className="product-card-badges">
-                    <CategoryBadge category={prod.category} />
-                    {prod.is_fragile && (
-                      <span className="badge badge-fragile">Fragile</span>
-                    )}
-                    {prod.is_hazardous && (
-                      <span className="badge badge-cleaning">Hazardous</span>
-                    )}
-                    {prod.is_expiring_soon && (
-                      <span className="badge badge-warning pulse-warning">
-                        Expiring Soon
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="product-card-body">
-                  <div>
-                    <div className="product-card-name" title={prod.name}>
-                      {prod.name}
-                    </div>
-                    <div className="product-card-sku">SKU: {prod.sku}</div>
-
-                    {/* Category-specific extra field badges */}
-                    {prod.category === 'Cold' && prod.expiry_date && (
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                        Expires: {prod.expiry_date} ({prod.storage_temp || 'Chill'})
-                      </div>
-                    )}
-
-                    {prod.category === 'Tech' && (
-                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
-                        Warranty: {prod.warranty_period || 'N/A'} mos • SN: {prod.serial_number || 'N/A'}
-                      </div>
-                    )}
-
-                    {prod.category === 'Fragile' && prod.handling_note && (
-                      <div style={{ fontSize: '0.75rem', color: 'var(--danger)', marginBottom: '8px' }}>
-                        Note: {prod.handling_note}
-                      </div>
-                    )}
-
-                    {prod.category === 'Cleaning' && prod.safety_note && (
-                      <div style={{ fontSize: '0.75rem', color: '#8a6e20', marginBottom: '8px' }}>
-                        Safety: {prod.safety_note}
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <div className="product-card-footer">
-                      <div className="product-card-price">
-                        ${parseFloat(prod.price).toFixed(2)}
-                      </div>
-                      <div
-                        className={`product-card-stock ${
-                          isCritical ? 'critical' : isLowStock ? 'low' : ''
-                        }`}
-                      >
-                        {prod.quantity_in_stock} in stock
-                      </div>
-                    </div>
-
-                    {(user?.role === 'admin' || user?.role === 'inventory_manager') && (
-                      <div style={{ display: 'flex', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--border-subtle)' }}>
-                        <button
-                          className="btn btn-ghost btn-sm"
-                          style={{ flex: 1 }}
-                          onClick={() => handleOpenEditModal(prod)}
-                        >
-                          <FiEdit2 size={13} /> Edit
-                        </button>
-                        {user?.role === 'admin' && (
-                          <button
-                            className="btn btn-ghost btn-sm"
-                            style={{ color: 'var(--danger)' }}
-                            onClick={() => handleDelete(prod.id, prod.name)}
-                            title="Delete Product"
-                          >
-                            <FiTrash2 size={13} />
-                          </button>
+                      <div className="product-card-badges" style={{ transform: 'translateZ(16px)' }}>
+                        <CategoryBadge category={prod.category} />
+                        {prod.is_fragile && (
+                          <span className="badge badge-fragile">Fragile</span>
+                        )}
+                        {prod.is_hazardous && (
+                          <span className="badge badge-cleaning">Hazardous</span>
+                        )}
+                        {prod.is_expiring_soon && (
+                          <span className="badge badge-warning pulse-warning">
+                            Expiring Soon
+                          </span>
                         )}
                       </div>
-                    )}
+                    </div>
+
+                    <div className="product-card-body" style={{ transform: 'translateZ(10px)' }}>
+                      <div>
+                        <div className="product-card-name" title={prod.name}>
+                          {prod.name}
+                        </div>
+                        <div className="product-card-sku">SKU: {prod.sku}</div>
+
+                        {/* Category-specific extra field badges */}
+                        {prod.category === 'Cold' && prod.expiry_date && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                            Expires: {prod.expiry_date} ({prod.storage_temp || 'Chill'})
+                          </div>
+                        )}
+
+                        {prod.category === 'Tech' && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                            Warranty: {prod.warranty_period || 'N/A'} mos • SN: {prod.serial_number || 'N/A'}
+                          </div>
+                        )}
+
+                        {prod.category === 'Fragile' && prod.handling_note && (
+                          <div style={{ fontSize: '0.75rem', color: 'var(--danger)', marginBottom: '8px' }}>
+                            Note: {prod.handling_note}
+                          </div>
+                        )}
+
+                        {prod.category === 'Cleaning' && prod.safety_note && (
+                          <div style={{ fontSize: '0.75rem', color: '#8a6e20', marginBottom: '8px' }}>
+                            Safety: {prod.safety_note}
+                          </div>
+                        )}
+                      </div>
+
+                      <div style={{ transform: 'translateZ(14px)' }}>
+                        <div className="product-card-footer">
+                          <div className="product-card-price">
+                            ${parseFloat(prod.price).toFixed(2)}
+                          </div>
+                          <div
+                            className={`product-card-stock ${
+                              isCritical ? 'critical pulse-danger' : isLowStock ? 'low pulse-warning' : ''
+                            }`}
+                          >
+                            {prod.quantity_in_stock} in stock
+                          </div>
+                        </div>
+
+                        {(user?.role === 'admin' || user?.role === 'inventory_manager') && (
+                          <div style={{ display: 'flex', gap: '8px', marginTop: '12px', paddingTop: '12px', borderTop: '1px solid var(--border-subtle)' }}>
+                            <MagneticButton
+                              className="btn btn-ghost btn-sm"
+                              style={{ flex: 1 }}
+                              onClick={() => handleOpenEditModal(prod)}
+                              strength={0.15}
+                            >
+                              <FiEdit2 size={13} /> Edit
+                            </MagneticButton>
+                            {user?.role === 'admin' && (
+                              <MagneticButton
+                                className="btn btn-ghost btn-sm"
+                                style={{ color: 'var(--danger)' }}
+                                onClick={() => handleDelete(prod.id, prod.name)}
+                                title="Delete Product"
+                                strength={0.15}
+                              >
+                                <FiTrash2 size={13} />
+                              </MagneticButton>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Tilt3D>
               </motion.div>
             );
           })}
