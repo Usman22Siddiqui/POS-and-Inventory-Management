@@ -57,11 +57,6 @@ export const Login = () => {
     }
   };
 
-  const handleQuickLogin = (demoEmail, demoPass) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-  };
-
   return (
     <div className="login-page" onMouseMove={handleMouseMove}>
       {/* 3D Storefront Background with Depth Zoom */}
@@ -177,52 +172,6 @@ export const Login = () => {
             {loading ? 'Authenticating...' : 'Sign In to Shift'} <FiArrowRight />
           </MagneticButton>
         </form>
-
-        {/* Quick Demo Access Roles */}
-        <div style={{ marginTop: '26px', borderTop: '1px solid var(--border-subtle)', paddingTop: '18px', transform: 'translateZ(10px)' }}>
-          <div
-            style={{
-              fontSize: '0.75rem',
-              fontFamily: 'var(--font-heading)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              color: 'var(--text-muted)',
-              marginBottom: '12px',
-              textAlign: 'center',
-            }}
-          >
-            Quick Role Switcher (Demo)
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
-            <MagneticButton
-              type="button"
-              className="btn btn-ghost btn-sm"
-              onClick={() => handleQuickLogin('admin@teerop.com', 'admin123')}
-              style={{ fontSize: '0.75rem' }}
-              strength={0.25}
-            >
-              Admin
-            </MagneticButton>
-            <MagneticButton
-              type="button"
-              className="btn btn-ghost btn-sm"
-              onClick={() => handleQuickLogin('manager@teerop.com', 'manager123')}
-              style={{ fontSize: '0.75rem' }}
-              strength={0.25}
-            >
-              Manager
-            </MagneticButton>
-            <MagneticButton
-              type="button"
-              className="btn btn-ghost btn-sm"
-              onClick={() => handleQuickLogin('cashier@teerop.com', 'cashier123')}
-              style={{ fontSize: '0.75rem' }}
-              strength={0.25}
-            >
-              Cashier
-            </MagneticButton>
-          </div>
-        </div>
       </motion.div>
     </div>
   );
