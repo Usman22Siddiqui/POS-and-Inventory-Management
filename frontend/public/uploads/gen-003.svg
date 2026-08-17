@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="285" rx="90" ry="25" fill="#3D4127" opacity="0.15"/>
+    <!-- Notebook Isometric -->
+    <g>
+      <path d="M 130 160 L 250 120 L 270 240 L 150 280 Z" fill="#3D4127"/>
+      <path d="M 125 150 L 245 110 L 265 230 L 145 270 Z" fill="#636B2F"/>
+      <!-- Inner Pages -->
+      <path d="M 135 155 L 240 120 L 255 225 L 150 260 Z" fill="#BAC095"/>
+      <!-- Bookmark ribbon -->
+      <path d="M 190 135 L 205 250 L 215 245 L 200 130 Z" fill="#C99A3C"/>
+      <!-- Label -->
+      <rect x="165" y="165" width="60" height="40" rx="4" fill="#F7F8F1" transform="rotate(-18 195 185)"/>
+    </g>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">RECYCLED NOTEBOOK</text>
+  </svg>

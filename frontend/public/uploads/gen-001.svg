@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="300" rx="85" ry="25" fill="#3D4127" opacity="0.15"/>
+    <!-- Tote Bag -->
+    <g>
+      <path d="M 130 170 L 140 290 Q 200 305 260 290 L 270 170 Z" fill="#BAC095"/>
+      <path d="M 130 170 Q 200 180 270 170" stroke="#636B2F" stroke-width="4" fill="none"/>
+      <!-- Handles -->
+      <path d="M 165 170 Q 165 80 200 80 Q 235 80 235 170" stroke="#3D4127" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <!-- Pocket / Motif -->
+      <rect x="175" y="210" width="50" height="45" rx="4" fill="#636B2F"/>
+      <circle cx="200" cy="232" r="10" fill="#D4DE95"/>
+    </g>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">COTTON TOTE BAG</text>
+  </svg>

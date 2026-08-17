@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="305" rx="65" ry="20" fill="#3D4127" opacity="0.15"/>
+    <!-- Bleach Bottle -->
+    <g>
+      <path d="M 165 140 L 155 280 Q 200 300 245 280 L 235 140 Z" fill="#D4DE95"/>
+      <rect x="157" y="195" width="86" height="50" rx="4" fill="#A6493B"/>
+      <text x="200" y="225" font-family="sans-serif" font-weight="bold" font-size="12" fill="#FFFFFF" text-anchor="middle">BLEACH</text>
+      <!-- Safety Cap -->
+      <rect x="185" y="100" width="30" height="40" rx="6" fill="#3D4127"/>
+      <!-- Hazard Diamond -->
+      <polygon points="200,230 207,237 200,244 193,237" fill="#C99A3C"/>
+    </g>
+    <text x="200" y="360" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">BLEACH CONCENTRATE</text>
+  </svg>

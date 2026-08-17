@@ -204,11 +204,7 @@ export const InventoryDashboard = () => {
                     <div className="product-card-img" style={{ transform: 'translateZ(12px)' }}>
                       {prod.image_url ? (
                         <img
-                          src={
-                            prod.image_url.startsWith('http')
-                              ? prod.image_url
-                              : `http://localhost:5000${prod.image_url}`
-                          }
+                          src={prod.image_url}
                           alt={prod.name}
                           loading="lazy"
                           className={floatClass}

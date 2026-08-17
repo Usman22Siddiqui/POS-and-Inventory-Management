@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <defs>
+      <linearGradient id="vaseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#D4DE95"/>
+        <stop offset="50%" stop-color="#BAC095"/>
+        <stop offset="100%" stop-color="#636B2F"/>
+      </linearGradient>
+      <filter id="glow">
+        <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#3D4127" flood-opacity="0.3"/>
+      </filter>
+    </defs>
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="320" rx="70" ry="20" fill="#3D4127" opacity="0.15"/>
+    <g filter="url(#glow)">
+      <!-- Vase body 3D shape -->
+      <path d="M 170 100 Q 150 160 130 220 Q 120 280 200 290 Q 280 280 270 220 Q 250 160 230 100 Z" fill="url(#vaseGrad)"/>
+      <ellipse cx="200" cy="100" rx="30" ry="10" fill="#3D4127"/>
+      <ellipse cx="200" cy="98" rx="26" ry="8" fill="#D4DE95"/>
+      <!-- Botanical Leaf stem -->
+      <path d="M 200 95 Q 220 40 260 30" stroke="#3D4127" stroke-width="4" fill="none"/>
+      <path d="M 230 65 Q 260 55 255 75 Q 240 75 230 65 Z" fill="#636B2F"/>
+      <path d="M 260 30 Q 280 25 285 45 Q 270 45 260 30 Z" fill="#BAC095"/>
+    </g>
+    <text x="200" y="360" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">ARTISAN GLASS VASE</text>
+  </svg>

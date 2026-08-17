@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <defs>
+      <linearGradient id="yogurtTub" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFFFFF"/>
+        <stop offset="100%" stop-color="#BAC095"/>
+      </linearGradient>
+      <filter id="shadow">
+        <feDropShadow dx="0" dy="15" stdDeviation="12" flood-color="#3D4127" flood-opacity="0.2"/>
+      </filter>
+    </defs>
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="300" rx="90" ry="25" fill="#3D4127" opacity="0.15"/>
+    <g filter="url(#shadow)">
+      <!-- Tub Base -->
+      <path d="M 130 170 L 150 280 Q 200 300 250 280 L 270 170 Z" fill="url(#yogurtTub)"/>
+      <!-- Label Band -->
+      <path d="M 137 205 L 146 255 Q 200 272 254 255 L 263 205 Q 200 220 137 205 Z" fill="#636B2F"/>
+      <text x="200" y="240" font-family="sans-serif" font-size="13" font-weight="bold" fill="#D4DE95" text-anchor="middle">GREEK YOGURT</text>
+      <!-- Tub Lid -->
+      <ellipse cx="200" cy="170" rx="72" ry="24" fill="#3D4127"/>
+      <ellipse cx="200" cy="166" rx="70" ry="22" fill="#D4DE95"/>
+      <ellipse cx="200" cy="166" rx="45" ry="12" fill="#636B2F"/>
+    </g>
+    <text x="200" y="360" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">HONEY GREEK YOGURT</text>
+  </svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="290" rx="90" ry="28" fill="#3D4127" opacity="0.15"/>
+    <!-- Bowl -->
+    <ellipse cx="200" cy="250" rx="100" ry="38" fill="#636B2F"/>
+    <ellipse cx="200" cy="245" rx="95" ry="34" fill="#D4DE95"/>
+    <!-- Mozzarella Ball 3D -->
+    <circle cx="200" cy="200" r="55" fill="#3D4127" opacity="0.2"/>
+    <circle cx="196" cy="190" r="55" fill="#FFFFFF"/>
+    <!-- Basil leaves -->
+    <path d="M 190 140 Q 230 130 220 165 Q 200 160 190 140 Z" fill="#636B2F"/>
+    <path d="M 160 170 Q 140 140 180 150 Q 170 170 160 170 Z" fill="#BAC095"/>
+    <!-- Drizzle -->
+    <path d="M 180 180 Q 210 200 230 195" stroke="#C99A3C" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">FRESH MOZZARELLA</text>
+  </svg>

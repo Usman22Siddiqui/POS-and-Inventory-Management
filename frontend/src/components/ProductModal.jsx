@@ -51,10 +51,7 @@ export const ProductModal = ({ isOpen, onClose, product = null, onSaved }) => {
         safety_note: product.safety_note || '',
       });
       if (product.image_url) {
-        const fullUrl = product.image_url.startsWith('http')
-          ? product.image_url
-          : `http://localhost:5000${product.image_url}`;
-        setImagePreview(fullUrl);
+        setImagePreview(product.image_url);
       } else {
         setImagePreview('');
       }

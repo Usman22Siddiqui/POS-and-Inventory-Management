@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="305" rx="80" ry="24" fill="#3D4127" opacity="0.18"/>
+    <!-- Industrial Canister -->
+    <g>
+      <rect x="130" y="140" width="140" height="150" rx="20" fill="#3D4127"/>
+      <rect x="130" y="130" width="140" height="150" rx="20" fill="#C99A3C"/>
+      <!-- Warning Band -->
+      <rect x="130" y="180" width="140" height="50" fill="#A6493B"/>
+      <polygon points="175,215 200,188 225,215" fill="#F7F8F1"/>
+      <text x="200" y="212" font-family="sans-serif" font-weight="bold" font-size="16" fill="#A6493B" text-anchor="middle">!</text>
+      <!-- Handle -->
+      <path d="M 160 130 L 160 85 Q 200 70 240 85 L 240 130" stroke="#3D4127" stroke-width="12" stroke-linecap="round" fill="none"/>
+      <!-- Cap -->
+      <rect x="230" y="90" width="30" height="20" rx="4" fill="#3D4127"/>
+    </g>
+    <text x="200" y="360" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">INDUSTRIAL DEGREASER</text>
+  </svg>
