@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiSearch, FiTrash2, FiPlus, FiMinus, FiCheck } from 'react-icons/fi';
+import { FiSearch, FiTrash2, FiPlus, FiMinus, FiCheck, FiShoppingBag } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { posApi, productsApi } from '../api';
@@ -38,7 +38,7 @@ export const CashierPOS = () => {
 
     setLoading(true);
     try {
-      // 1. Try SKU exact lookup first
+      // 1. Try SKU exact case-insensitive lookup first
       const res = await posApi.lookup(query);
       if (res.success && res.data.product) {
         addToCart(res.data.product);
@@ -46,7 +46,7 @@ export const CashierPOS = () => {
         setShowSearchResults(false);
       }
     } catch (err) {
-      // 2. If SKU lookup fails, fallback to name search
+      // 2. If SKU lookup fails, fallback to name/sku search
       try {
         const searchRes = await productsApi.search({ name: query });
         if (searchRes.success && searchRes.data.products?.length > 0) {
@@ -59,7 +59,20 @@ export const CashierPOS = () => {
             setShowSearchResults(true);
           }
         } else {
-          toast.error(`No product found matching "${query}"`);
+          // 3. Try searching by SKU partial match
+          const skuSearchRes = await productsApi.search({ sku: query });
+          if (skuSearchRes.success && skuSearchRes.data.products?.length > 0) {
+            if (skuSearchRes.data.products.length === 1) {
+              addToCart(skuSearchRes.data.products[0]);
+              setScanQuery('');
+              setShowSearchResults(false);
+            } else {
+              setSearchResults(skuSearchRes.data.products);
+              setShowSearchResults(true);
+            }
+          } else {
+            toast.error(`No product found matching "${query}"`);
+          }
         }
       } catch (searchErr) {
         toast.error(`No item found with code "${query}"`);
@@ -183,7 +196,7 @@ export const CashierPOS = () => {
               ref={scanInputRef}
               type="text"
               className="input input-scan"
-              placeholder="Scan Barcode / Enter SKU / Search Name (Press Enter)..."
+              placeholder="Scan Barcode / Enter SKU (e.g. frg-001, CLD-002) / Search (Press Enter)..."
               value={scanQuery}
               onChange={(e) => setScanQuery(e.target.value)}
               disabled={loading}
@@ -211,9 +224,10 @@ export const CashierPOS = () => {
               className="card card-glass"
               style={{
                 marginTop: '8px',
-                maxHeight: '200px',
+                maxHeight: '220px',
                 overflowY: 'auto',
                 padding: '8px',
+                zIndex: 30,
               }}
             >
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '6px' }}>
@@ -255,23 +269,26 @@ export const CashierPOS = () => {
         {/* Cart Item Stream */}
         <div className="pos-cart">
           {cart.length === 0 ? (
-            <div className="pos-cart-empty">
-              <FloatingFrame duration={6} yOffset={8} rotateOffset={1}>
+            <div className="pos-cart-empty" style={{ padding: '32px 20px' }}>
+              <FloatingFrame duration={6} yOffset={6} rotateOffset={0.8}>
                 <img
                   src={emptyShelfImg}
                   alt="Empty Register"
                   style={{
-                    width: '200px',
-                    filter: 'drop-shadow(0 12px 24px rgba(61, 65, 39, 0.15))',
-                    borderRadius: '16px',
+                    width: '320px',
+                    maxWidth: '90%',
+                    height: 'auto',
+                    filter: 'drop-shadow(0 16px 32px rgba(61, 65, 39, 0.18))',
+                    borderRadius: '20px',
+                    border: '1px solid rgba(186, 192, 149, 0.4)',
                   }}
                 />
               </FloatingFrame>
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem', marginTop: '16px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginTop: '20px', fontWeight: 600 }}>
                 Register Ready for Scanning
               </div>
-              <div style={{ fontSize: '0.875rem' }}>
-                Barcode scanner will automatically register items as they are scanned.
+              <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', maxWidth: '380px', marginTop: '6px' }}>
+                Scan barcodes (case-insensitive) or type SKU/names. Scanned items settle directly into the active cart ticket.
               </div>
             </div>
           ) : (
@@ -282,7 +299,7 @@ export const CashierPOS = () => {
                   className="cart-item"
                   layout
                   /* Section 4: Signature Scan-to-Cart Settle Animation (~200ms with slight overshoot) */
-                  initial={{ opacity: 0, y: -20, scale: 0.96 }}
+                  initial={{ opacity: 0, y: -20, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, x: -30 }}
                   transition={{
@@ -351,9 +368,14 @@ export const CashierPOS = () => {
             </span>
           </div>
           {cart.length > 0 && (
-            <button className="btn btn-ghost btn-sm" onClick={clearCart}>
+            <motion.button
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="btn btn-ghost btn-sm"
+              onClick={clearCart}
+            >
               Clear All
-            </button>
+            </motion.button>
           )}
         </div>
 
@@ -381,11 +403,13 @@ export const CashierPOS = () => {
           </div>
 
           <div style={{ marginTop: 'var(--space-4)' }}>
-            <button
+            <motion.button
               type="button"
               className="btn btn-checkout"
               disabled={cart.length === 0 || checkoutLoading}
               onClick={handleCheckout}
+              whileHover={{ scale: cart.length > 0 ? 1.02 : 1 }}
+              whileTap={{ scale: 0.98 }}
             >
               {checkoutLoading ? (
                 'Finalizing Sale...'
@@ -394,7 +418,7 @@ export const CashierPOS = () => {
                   <FiCheck /> Charge ${grandTotal.toFixed(2)}
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>

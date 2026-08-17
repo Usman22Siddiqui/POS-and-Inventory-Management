@@ -16,7 +16,13 @@ const lookupBySku = async (req, res, next) => {
       throw new AppError('SKU is required — scan or type a product code', 400);
     }
 
-    const product = await Product.findOne({ where: { sku } });
+    const cleanSku = sku.trim().toUpperCase();
+    const product = await Product.findOne({
+      where: sequelize.where(
+        sequelize.fn('UPPER', sequelize.col('sku')),
+        cleanSku
+      ),
+    });
     if (!product) {
       throw new AppError(`No product found with SKU "${sku}"`, 404);
     }

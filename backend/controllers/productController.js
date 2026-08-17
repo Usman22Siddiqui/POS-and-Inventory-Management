@@ -202,15 +202,27 @@ const deleteProduct = async (req, res, next) => {
 const searchProducts = async (req, res, next) => {
   try {
     const { name, sku, category } = req.query;
-    const where = {};
+    const whereConditions = [];
 
     if (name) {
-      where.name = { [Op.like]: `%${name}%` };
+      whereConditions.push(
+        Product.sequelize.where(
+          Product.sequelize.fn('LOWER', Product.sequelize.col('name')),
+          { [Op.like]: `%${name.trim().toLowerCase()}%` }
+        )
+      );
     }
 
     if (sku) {
-      where.sku = { [Op.like]: `%${sku}%` };
+      whereConditions.push(
+        Product.sequelize.where(
+          Product.sequelize.fn('UPPER', Product.sequelize.col('sku')),
+          { [Op.like]: `%${sku.trim().toUpperCase()}%` }
+        )
+      );
     }
+
+    const where = whereConditions.length > 0 ? { [Op.and]: whereConditions } : {};
 
     if (category) {
       const validCategories = ['Fragile', 'Cold', 'Tech', 'Cleaning', 'General'];
