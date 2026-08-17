@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="285" rx="95" ry="25" fill="#3D4127" opacity="0.18"/>
+    <!-- 3D Hub Body -->
+    <g>
+      <!-- Base extrusion -->
+      <rect x="110" y="160" width="180" height="90" rx="16" fill="#3D4127"/>
+      <rect x="110" y="150" width="180" height="90" rx="16" fill="#636B2F"/>
+      <!-- Top Bevel -->
+      <rect x="118" y="156" width="164" height="78" rx="10" fill="#BAC095"/>
+      <!-- USB Ports -->
+      <rect x="135" y="175" width="22" height="10" rx="2" fill="#3D4127"/>
+      <rect x="170" y="175" width="22" height="10" rx="2" fill="#3D4127"/>
+      <rect x="205" y="175" width="22" height="10" rx="2" fill="#3D4127"/>
+      <rect x="240" y="175" width="22" height="10" rx="2" fill="#3D4127"/>
+      <!-- LED Indicator -->
+      <circle cx="130" cy="210" r="4" fill="#D4DE95"/>
+      <text x="200" y="215" font-family="monospace" font-size="11" fill="#3D4127" text-anchor="middle" font-weight="bold">USB-C HUB 7-PORT</text>
+      <!-- Cable -->
+      <path d="M 290 195 Q 340 195 340 140" stroke="#3D4127" stroke-width="8" stroke-linecap="round" fill="none"/>
+    </g>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">USB-C CHARGING HUB</text>
+  </svg>

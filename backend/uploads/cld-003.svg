@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <defs>
+      <linearGradient id="salmonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#C99A3C"/>
+        <stop offset="50%" stop-color="#A6493B"/>
+        <stop offset="100%" stop-color="#8a3024"/>
+      </linearGradient>
+    </defs>
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="285" rx="105" ry="35" fill="#3D4127" opacity="0.16"/>
+    <!-- Board -->
+    <ellipse cx="200" cy="245" rx="120" ry="45" fill="#3D4127"/>
+    <ellipse cx="200" cy="238" rx="116" ry="42" fill="#BAC095"/>
+    <!-- Salmon Fillet 3D -->
+    <path d="M 120 230 Q 180 180 270 200 Q 290 230 250 250 Q 160 260 120 230 Z" fill="url(#salmonGrad)"/>
+    <!-- White marbling lines -->
+    <path d="M 150 215 Q 180 230 200 245" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+    <path d="M 190 205 Q 220 220 240 235" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+    <path d="M 230 200 Q 255 210 265 220" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+    <!-- Herb Garnish -->
+    <circle cx="160" cy="205" r="4" fill="#636B2F"/>
+    <circle cx="168" cy="202" r="3" fill="#636B2F"/>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">SMOKED SALMON FILLET</text>
+  </svg>

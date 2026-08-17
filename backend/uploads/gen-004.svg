@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <rect width="400" height="400" fill="#F7F8F1" rx="24"/>
+    <ellipse cx="200" cy="290" rx="100" ry="25" fill="#3D4127" opacity="0.15"/>
+    <!-- Bamboo Cutting Board -->
+    <g>
+      <!-- Board Base Extrusion -->
+      <rect x="100" y="165" width="200" height="100" rx="16" fill="#3D4127"/>
+      <rect x="100" y="150" width="200" height="100" rx="16" fill="#BAC095"/>
+      <!-- Wood Stripes -->
+      <line x1="100" y1="180" x2="300" y2="180" stroke="#636B2F" stroke-width="3" opacity="0.4"/>
+      <line x1="100" y1="210" x2="300" y2="210" stroke="#636B2F" stroke-width="3" opacity="0.4"/>
+      <line x1="100" y1="230" x2="300" y2="230" stroke="#636B2F" stroke-width="3" opacity="0.4"/>
+      <!-- Juice Groove -->
+      <rect x="115" y="165" width="170" height="70" rx="8" fill="none" stroke="#636B2F" stroke-width="3"/>
+      <!-- Hanging Hole -->
+      <circle cx="265" cy="200" r="10" fill="#3D4127"/>
+    </g>
+    <text x="200" y="350" font-family="sans-serif" font-weight="bold" font-size="14" fill="#3D4127" text-anchor="middle" letter-spacing="2">BAMBOO CUTTING BOARD</text>
+  </svg>
