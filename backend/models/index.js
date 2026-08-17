@@ -61,12 +61,15 @@ db.Product = require('./Product')(sequelize);
 db.Transaction = require('./Transaction')(sequelize);
 db.TransactionItem = require('./TransactionItem')(sequelize);
 
-// Associations
-Object.keys(db).forEach((modelName) => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+// ── Explicit Model Associations ──
+db.User.hasMany(db.Transaction, { foreignKey: 'cashier_id', as: 'transactions' });
+db.Transaction.belongsTo(db.User, { foreignKey: 'cashier_id', as: 'cashier' });
+
+db.Transaction.hasMany(db.TransactionItem, { foreignKey: 'transaction_id', as: 'items' });
+db.TransactionItem.belongsTo(db.Transaction, { foreignKey: 'transaction_id', as: 'transaction' });
+
+db.Product.hasMany(db.TransactionItem, { foreignKey: 'product_id', as: 'transaction_items' });
+db.TransactionItem.belongsTo(db.Product, { foreignKey: 'product_id', as: 'product' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -1,0 +1,77 @@
+services:
+  # ── PostgreSQL Database ──
+  postgres:
+    image: postgres:16-alpine
+    container_name: teerop-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: teerop_pos
+      POSTGRES_USER: teerop_admin
+      POSTGRES_PASSWORD: teerop_secure_password_2026
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U teerop_admin -d teerop_pos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - teerop-network
+
+  # ── Express Backend API ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: teerop-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      DATABASE_URL: postgres://teerop_admin:teerop_secure_password_2026@postgres:5432/teerop_pos
+      JWT_SECRET: teerop-pos-super-secret-jwt-key-2026
+      DB_SSL: "false"
+      FRONTEND_URL: http://localhost
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    networks:
+      - teerop-network
+
+  # ── React Frontend + Nginx ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: teerop-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    networks:
+      - teerop-network
+
+volumes:
+  postgres_data:
+    name: teerop_postgres_data
+
+networks:
+  teerop-network:
+    name: teerop_network
+    driver: bridge
