@@ -1,0 +1,107 @@
+{
+	"_type": "Project",
+	"_id": "AAAAAAGQteeropProjectRoot",
+	"name": "Teerop POS & Inventory System Architecture",
+	"ownedElements": [
+		{
+			"_type": "UMLModel",
+			"_id": "AAAAAAGQteeropDomainModel",
+			"_parent": {
+				"$ref": "AAAAAAGQteeropProjectRoot"
+			},
+			"name": "Domain Model & Data Architecture",
+			"ownedElements": [
+				{
+					"_type": "UMLClassDiagram",
+					"_id": "AAAAAAGQteeropClassDiagram",
+					"_parent": {
+						"$ref": "AAAAAAGQteeropDomainModel"
+					},
+					"name": "Class Diagram - Full Relational Model"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGQUserClass",
+					"_parent": {
+						"$ref": "AAAAAAGQteeropDomainModel"
+					},
+					"name": "User",
+					"attributes": [
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_id", "name": "id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_username", "name": "username", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_email", "name": "email", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_password", "name": "password", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_role", "name": "role", "type": "RoleEnum ['admin', 'inventory_manager', 'cashier']", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQU_isActive", "name": "is_active", "type": "Boolean", "visibility": "private" }
+					],
+					"operations": [
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_valPass", "name": "validatePassword", "parameters": [{ "_type": "UMLParameter", "name": "password", "type": "String" }] },
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQU_toSafe", "name": "toSafeJSON" }
+					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGQProductClass",
+					"_parent": {
+						"$ref": "AAAAAAGQteeropDomainModel"
+					},
+					"name": "Product",
+					"attributes": [
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_id", "name": "id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_sku", "name": "sku", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_name", "name": "name", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_category", "name": "category", "type": "CategoryEnum ['Fragile', 'Cold', 'Tech', 'Cleaning', 'General']", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_price", "name": "price", "type": "Decimal(10,2)", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_qty", "name": "quantity_in_stock", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_reorder", "name": "reorder_threshold", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_imageUrl", "name": "image_url", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_desc", "name": "description", "type": "Text", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_hNote", "name": "handling_note", "type": "Text", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_isFrag", "name": "is_fragile", "type": "Boolean", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_expDate", "name": "expiry_date", "type": "DateOnly", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_storTemp", "name": "storage_temp", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_warranty", "name": "warranty_period", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_sn", "name": "serial_number", "type": "String", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_isHaz", "name": "is_hazardous", "type": "Boolean", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQP_safeNote", "name": "safety_note", "type": "Text", "visibility": "private" }
+					],
+					"operations": [
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isLow", "name": "isLowStock", "parameters": [{ "_type": "UMLParameter", "direction": "return", "type": "Boolean" }] },
+						{ "_type": "UMLOperation", "_id": "AAAAAAGQP_isExp", "name": "isExpiringSoon", "parameters": [{ "_type": "UMLParameter", "direction": "return", "type": "Boolean" }] }
+					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGQTransactionClass",
+					"_parent": {
+						"$ref": "AAAAAAGQteeropDomainModel"
+					},
+					"name": "Transaction",
+					"attributes": [
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQT_id", "name": "id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQT_cashierId", "name": "cashier_id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQT_total", "name": "total_amount", "type": "Decimal(10,2)", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQT_tax", "name": "tax", "type": "Decimal(10,2)", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQT_time", "name": "timestamp", "type": "DateTime", "visibility": "private" }
+					]
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGQTransactionItemClass",
+					"_parent": {
+						"$ref": "AAAAAAGQteeropDomainModel"
+					},
+					"name": "TransactionItem",
+					"attributes": [
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_id", "name": "id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_txId", "name": "transaction_id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_prodId", "name": "product_id", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_qty", "name": "quantity", "type": "Integer", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_uPrice", "name": "unit_price", "type": "Decimal(10,2)", "visibility": "private" },
+						{ "_type": "UMLAttribute", "_id": "AAAAAAGQTI_subtotal", "name": "subtotal", "type": "Decimal(10,2)", "visibility": "private" }
+					]
+				}
+			]
+		}
+	]
+}

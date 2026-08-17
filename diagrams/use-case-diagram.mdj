@@ -1,0 +1,105 @@
+{
+	"_type": "Project",
+	"_id": "AAAAAAGQUseCaseRoot",
+	"name": "Teerop POS Use Case Model",
+	"ownedElements": [
+		{
+			"_type": "UMLModel",
+			"_id": "AAAAAAGQUseCaseModel",
+			"_parent": {
+				"$ref": "AAAAAAGQUseCaseRoot"
+			},
+			"name": "Use Cases",
+			"ownedElements": [
+				{
+					"_type": "UMLUseCaseDiagram",
+					"_id": "AAAAAAGQUCDiagram",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Teerop POS System Use Cases"
+				},
+				{
+					"_type": "UMLActor",
+					"_id": "AAAAAAGQAdminActor",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "System Administrator"
+				},
+				{
+					"_type": "UMLActor",
+					"_id": "AAAAAAGQManagerActor",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Inventory Manager"
+				},
+				{
+					"_type": "UMLActor",
+					"_id": "AAAAAAGQCashierActor",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Cashier"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_Login",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Authenticate & Start Shift"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_Scan",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Scan Barcode / SKU Lookup"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_Checkout",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Atomic Checkout & Print Receipt"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_InventoryCRUD",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Manage Multi-Category Inventory"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_LowStockAlert",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Monitor Low-Stock & Expiration Rails"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_StaffManage",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "Administer Staff & Role Permissions"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAGQUC_Analytics",
+					"_parent": {
+						"$ref": "AAAAAAGQUseCaseModel"
+					},
+					"name": "View Revenue & Sales Analytics"
+				}
+			]
+		}
+	]
+}

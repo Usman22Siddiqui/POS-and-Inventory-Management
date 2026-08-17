@@ -1,0 +1,25 @@
+{
+	"_type": "Project",
+	"_id": "AAAAAAGQSequenceRoot",
+	"name": "Teerop POS Sequence Model",
+	"ownedElements": [
+		{
+			"_type": "UMLModel",
+			"_id": "AAAAAAGQSequenceModel",
+			"_parent": {
+				"$ref": "AAAAAAGQSequenceRoot"
+			},
+			"name": "POS Checkout Lifecycle Sequence",
+			"ownedElements": [
+				{
+					"_type": "UMLSequenceDiagram",
+					"_id": "AAAAAAGQSeqDiagram",
+					"_parent": {
+						"$ref": "AAAAAAGQSequenceModel"
+					},
+					"name": "Atomic Checkout & Stock Decrement Sequence"
+				}
+			]
+		}
+	]
+}
