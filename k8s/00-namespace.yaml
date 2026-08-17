@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: teerop-pos
+  labels:
+    app.kubernetes.io/name: teerop-pos
+    app.kubernetes.io/environment: production

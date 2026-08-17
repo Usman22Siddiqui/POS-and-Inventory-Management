@@ -51,6 +51,17 @@ app.use(async (req, res, next) => {
   }
 });
 
+const { metricsMiddleware, getPrometheusMetrics } = require('./middleware/metrics');
+
+// ── Metrics Middleware ──
+app.use(metricsMiddleware);
+
+// ── Prometheus Metrics Endpoint ──
+app.get('/api/metrics', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain; version=0.0.4; charset=utf-8');
+  res.send(getPrometheusMetrics());
+});
+
 // ── API Routes ──
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/products', require('./routes/products'));

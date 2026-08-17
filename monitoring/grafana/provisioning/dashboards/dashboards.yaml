@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'Teerop Dashboards'
+    orgId: 1
+    folder: 'Teerop POS'
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /etc/grafana/provisioning/dashboards/json
