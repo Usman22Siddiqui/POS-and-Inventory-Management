@@ -15,8 +15,9 @@ module.exports = {
     port: parseInt(process.env.DB_PORT, 10) || 5432,
     database: process.env.DB_NAME || 'teerop_pos',
     username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres',
-    dialect: 'postgres',
+    password: process.env.DB_PASSWORD || '',
+    dialect: process.env.DB_DIALECT || 'postgres',
+    storage: process.env.DB_STORAGE || './database.sqlite',
     logging: process.env.DB_LOGGING === 'true' ? console.log : false,
     define: {
       timestamps: true,
@@ -25,18 +26,13 @@ module.exports = {
     dialectOptions,
   },
   test: {
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: parseInt(process.env.DB_PORT, 10) || 5432,
-    database: process.env.DB_NAME_TEST || 'teerop_pos_test',
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD || 'postgres',
-    dialect: 'postgres',
+    dialect: 'sqlite',
+    storage: ':memory:',
     logging: false,
     define: {
       timestamps: true,
       underscored: true,
     },
-    dialectOptions,
   },
   production: {
     use_env_variable: process.env.DATABASE_URL ? 'DATABASE_URL' : undefined,

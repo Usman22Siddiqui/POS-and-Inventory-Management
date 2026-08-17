@@ -13,8 +13,13 @@ if (process.env.DATABASE_URL) {
     define: dbConfig.define,
     dialectOptions: dbConfig.dialectOptions || {},
   });
-} else if (dbConfig.use_env_variable && process.env[dbConfig.use_env_variable]) {
-  sequelize = new Sequelize(process.env[dbConfig.use_env_variable], dbConfig);
+} else if (dbConfig.dialect === 'sqlite') {
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: dbConfig.storage || './database.sqlite',
+    logging: dbConfig.logging,
+    define: dbConfig.define,
+  });
 } else {
   sequelize = new Sequelize(
     dbConfig.database,
