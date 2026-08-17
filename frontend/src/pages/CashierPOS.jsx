@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FiSearch, FiTrash2, FiPlus, FiMinus, FiShoppingBag, FiCheck } from 'react-icons/fi';
+import { FiSearch, FiTrash2, FiPlus, FiMinus, FiCheck } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { posApi, productsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
 import { ReceiptModal } from '../components/ReceiptModal';
+import { FloatingFrame } from '../components/FloatingFrame';
 import emptyShelfImg from '../assets/illustrations/empty-state.jpg';
 
 export const CashierPOS = () => {
@@ -255,8 +256,18 @@ export const CashierPOS = () => {
         <div className="pos-cart">
           {cart.length === 0 ? (
             <div className="pos-cart-empty">
-              <img src={emptyShelfImg} alt="Empty Register" />
-              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem' }}>
+              <FloatingFrame duration={6} yOffset={8} rotateOffset={1}>
+                <img
+                  src={emptyShelfImg}
+                  alt="Empty Register"
+                  style={{
+                    width: '200px',
+                    filter: 'drop-shadow(0 12px 24px rgba(61, 65, 39, 0.15))',
+                    borderRadius: '16px',
+                  }}
+                />
+              </FloatingFrame>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.125rem', marginTop: '16px' }}>
                 Register Ready for Scanning
               </div>
               <div style={{ fontSize: '0.875rem' }}>

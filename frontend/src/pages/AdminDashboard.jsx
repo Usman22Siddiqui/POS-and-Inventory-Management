@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fi';
 import { statsApi } from '../api';
 import { CategoryBadge } from '../components/CategoryBadge';
+import { Tilt3D } from '../components/Tilt3D';
 
 export const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -60,41 +61,49 @@ export const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Metric Cards Grid */}
+      {/* 3D Metric Cards Grid */}
       <div className="stats-grid">
-        <div className="card card-stat card-glass">
-          <div className="stat-icon" style={{ background: 'rgba(99, 107, 47, 0.15)', color: 'var(--moss-primary)' }}>
-            <FiDollarSign />
+        <Tilt3D maxTilt={5} depth={18} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-icon" style={{ background: 'rgba(99, 107, 47, 0.15)', color: 'var(--moss-primary)' }}>
+              <FiDollarSign />
+            </div>
+            <div className="stat-value">${stats?.todaySales?.total?.toFixed(2) || '0.00'}</div>
+            <div className="stat-label">Today's Revenue ({stats?.todaySales?.count || 0} sales)</div>
           </div>
-          <div className="stat-value">${stats?.todaySales?.total?.toFixed(2) || '0.00'}</div>
-          <div className="stat-label">Today's Revenue ({stats?.todaySales?.count || 0} sales)</div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat card-glass">
-          <div className="stat-icon" style={{ background: 'rgba(186, 192, 149, 0.3)', color: 'var(--moss-deep)' }}>
-            <FiTrendingUp />
+        <Tilt3D maxTilt={5} depth={18} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-icon" style={{ background: 'rgba(186, 192, 149, 0.3)', color: 'var(--moss-deep)' }}>
+              <FiTrendingUp />
+            </div>
+            <div className="stat-value">${stats?.allTimeSales?.total?.toFixed(2) || '0.00'}</div>
+            <div className="stat-label">All-Time Revenue ({stats?.allTimeSales?.count || 0} txs)</div>
           </div>
-          <div className="stat-value">${stats?.allTimeSales?.total?.toFixed(2) || '0.00'}</div>
-          <div className="stat-label">All-Time Revenue ({stats?.allTimeSales?.count || 0} txs)</div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat card-glass">
-          <div className="stat-icon" style={{ background: 'rgba(166, 73, 59, 0.15)', color: 'var(--danger)' }}>
-            <FiAlertTriangle />
+        <Tilt3D maxTilt={5} depth={18} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-icon" style={{ background: 'rgba(166, 73, 59, 0.15)', color: 'var(--danger)' }}>
+              <FiAlertTriangle />
+            </div>
+            <div className="stat-value" style={{ color: stats?.lowStockCount > 0 ? 'var(--danger)' : 'inherit' }}>
+              {stats?.lowStockCount || 0}
+            </div>
+            <div className="stat-label">Low-Stock Items</div>
           </div>
-          <div className="stat-value" style={{ color: stats?.lowStockCount > 0 ? 'var(--danger)' : 'inherit' }}>
-            {stats?.lowStockCount || 0}
-          </div>
-          <div className="stat-label">Low-Stock Items</div>
-        </div>
+        </Tilt3D>
 
-        <div className="card card-stat card-glass">
-          <div className="stat-icon" style={{ background: 'rgba(212, 222, 149, 0.4)', color: 'var(--moss-deep)' }}>
-            <FiUsers />
+        <Tilt3D maxTilt={5} depth={18} enableGlow={true}>
+          <div className="card card-stat card-glass h-full">
+            <div className="stat-icon" style={{ background: 'rgba(212, 222, 149, 0.4)', color: 'var(--moss-deep)' }}>
+              <FiUsers />
+            </div>
+            <div className="stat-value">{stats?.activeUsers || 0}</div>
+            <div className="stat-label">Active Staff Accounts</div>
           </div>
-          <div className="stat-value">{stats?.activeUsers || 0}</div>
-          <div className="stat-label">Active Staff Accounts</div>
-        </div>
+        </Tilt3D>
       </div>
 
       {/* Two Column Layout for Recent Sales & Top Products */}

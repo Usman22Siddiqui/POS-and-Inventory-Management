@@ -28,7 +28,7 @@ app.use('/api/stats', require('./routes/stats'));
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', database: 'connected', timestamp: new Date().toISOString() });
 });
 
 // ── Error handling (must be last) ──
@@ -37,16 +37,16 @@ app.use(errorHandler);
 // ── Start server ──
 const start = async () => {
   try {
-    // Sync database (creates tables if they don't exist)
-    await sequelize.sync({ alter: true });
-    console.log('Database synced successfully');
+    // Authenticate database connection (Schema managed via Sequelize migrations)
+    await sequelize.authenticate();
+    console.log('Database connected successfully (PostgreSQL via Sequelize)');
 
     app.listen(PORT, () => {
       console.log(`\n  Teerop POS API running on http://localhost:${PORT}`);
       console.log(`  Environment: ${process.env.NODE_ENV || 'development'}\n`);
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error('Failed to connect to database or start server:', error);
     process.exit(1);
   }
 };
