@@ -1,10 +1,10 @@
 # ── Multi-Stage Production Dockerfile for Teerop Backend ──
 
-# Stage 1: Build & Dependencies
+# Stage 1: Dependencies
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Stage 2: Production Runtime
 FROM node:20-alpine AS runner

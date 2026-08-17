@@ -9,17 +9,16 @@ on:
 jobs:
   # ── Code Quality & Security Audit ──
   quality-check:
-    name: Code Quality & Audit
+    name: Code Quality & Security Audit
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Audit Backend Dependencies
         working-directory: ./backend
@@ -29,13 +28,13 @@ jobs:
         working-directory: ./frontend
         run: npm audit --audit-level=critical || true
 
-  # ── Build & Test Job ──
+  # ── Build & Verification Job ──
   build-and-test:
-    name: Build & Verify Artifacts
+    name: Build & Code Verification
     runs-on: ubuntu-latest
     needs: quality-check
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js 20
@@ -43,32 +42,32 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install & Build Backend
+      - name: Install & Validate Backend
         working-directory: ./backend
         run: |
-          npm ci
-          node -e "require('./models'); console.log('✓ Backend models valid');"
+          npm install
+          node -e "require('./models'); console.log('✓ Backend models and associations validated');"
 
       - name: Install & Build Frontend
         working-directory: ./frontend
         run: |
-          npm ci
+          npm install
           npm run build
 
   # ── Containerization & Docker Compose Verification ──
   docker-validation:
-    name: Docker Container Validation
+    name: Docker & Microservices Build
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Validate Docker Compose Configuration
+      - name: Validate Compose Config
         run: docker compose config
 
-      - name: Build Docker Containers
-        run: docker compose build --no-cache
+      - name: Build Docker Service Containers
+        run: docker compose build
