@@ -4,14 +4,22 @@ const config = require('../config/database');
 const env = process.env.NODE_ENV || 'development';
 const dbConfig = config[env] || config.development;
 
+const isCloudDb = !!process.env.DATABASE_URL || process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production';
+const defaultDialectOptions = isCloudDb ? {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
+} : {};
+
 let sequelize;
 
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
-    logging: dbConfig.logging,
-    define: dbConfig.define,
-    dialectOptions: dbConfig.dialectOptions || {},
+    logging: dbConfig?.logging || false,
+    define: dbConfig?.define || { timestamps: true, underscored: true },
+    dialectOptions: dbConfig?.dialectOptions?.ssl ? dbConfig.dialectOptions : defaultDialectOptions,
   });
 } else if (dbConfig.dialect === 'sqlite') {
   sequelize = new Sequelize({
