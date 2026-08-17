@@ -272,10 +272,16 @@ const seed = async () => {
     ]);
 
     console.log('✓ Seeding complete with 17 product images attached!');
-    process.exit(0);
+    if (require.main === module) {
+      process.exit(0);
+    }
+    return true;
   } catch (error) {
     console.error('Seed failed:', error);
-    process.exit(1);
+    if (require.main === module) {
+      process.exit(1);
+    }
+    throw error;
   }
 };
 
@@ -285,4 +291,8 @@ function getDateFromNow(days) {
   return d.toISOString().split('T')[0];
 }
 
-seed();
+if (require.main === module) {
+  seed();
+}
+
+module.exports = seed;
