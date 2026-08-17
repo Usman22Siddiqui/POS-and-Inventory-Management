@@ -1,0 +1,25 @@
+databases:
+  - name: teerop-postgres
+    databaseName: teerop_pos
+    user: teerop_user
+    plan: free
+
+services:
+  - type: web
+    name: teerop-pos-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npx sequelize-cli db:migrate && node seed.js && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: teerop-postgres
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_SSL
+        value: "true"
